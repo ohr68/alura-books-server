@@ -14,9 +14,16 @@ function getLivros(request, response) {
 function getLivro(request, response) {
     try {
         const id = request.params.id;
-        const livro = getLivrosPorId(id);
 
-        response.send(livro);
+        if (id && Number(id)) {
+            const livro = getLivrosPorId(id);
+            response.send(livro);
+        }
+        else {
+            res.status(422)
+            res.send("Id inválido")
+        }
+
     } catch (error) {
         response.status(500);
         response.send(error.message);
@@ -27,10 +34,15 @@ function postLivro(request, response) {
     try {
         const livroNovo = request.body;
 
-        insereLivro(livroNovo);
+        if (request.body.nome) {
+            insereLivro(livroNovo);
 
-        response.status(201);
-        response.send("Livro inserido com sucesso");
+            response.status(201);
+            response.send("Livro inserido com sucesso");
+        } else {
+            res.status(422)
+            res.send("O campo nome é obrigatório")
+        }
 
     } catch (error) {
         response.status(500);
@@ -43,9 +55,13 @@ function patchLivro(request, response) {
         const id = request.params.id;
         const modificacoes = request.body;
 
-        modificaLivro(id, modificacoes);
-
-        response.send("Item modificado com sucesso.");
+        if (id && Number(id)) {
+            modificaLivro(id, modificacoes);
+            response.send("Item modificado com sucesso.");
+        } else {
+            res.status(422)
+            res.send("Id inválido")
+        }
 
     } catch (error) {
         response.status(500);
@@ -57,10 +73,13 @@ function deleteLivro(request, response) {
     try {
         const id = request.params.id;
 
-        removeLivro(id);
-
-        response.send("Livro removido com sucesso");
-
+        if (id && Number(id)) {
+            removeLivro(id);
+            response.send("Livro removido com sucesso");
+        } else {
+            res.status(422)
+            res.send("ID inválido")
+        }
     } catch (error) {
         response.status(500);
         response.send(error.message);
