@@ -1,4 +1,4 @@
-const { getTodosFavoritos, insereFavorito, deletaFavoritoPorId } = require("../servicos/favorito");
+const { getTodosFavoritos, insereFavorito, deletaFavoritoPorId } = require("../servicos/favoritos");
 
 function getFavoritos(request, response) {
     try {
